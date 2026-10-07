@@ -1,0 +1,31 @@
+{
+  "notes": "A made-up configuration for the examples of token-transfer-check that passes at error and warning level: a real estate token of a made-up building. Every name is made up, every address is one character written many times, no key or seed is in the file, and nothing here is legal advice. The lock-up of reg-d follows the one year of Rule 144 (d)(1)(ii) as an example only.",
+  "token": {
+    "name": "Meadow Example Lofts Token",
+    "symbol": "MLT",
+    "standard": "ERC-3643",
+    "decimals": 2,
+    "totalSupply": "50000.00"
+  },
+  "compliance": {
+    "allowedCountries": ["US", "GB", "DE", "CH", "SG"],
+    "requiredClaims": ["KYC", "ACCREDITATION"],
+    "maxHolders": 99,
+    "maxHoldersPerCountry": { "US": 35, "GB": 10 },
+    "maxHolding": "25%",
+    "investorClasses": [
+      { "name": "reg-d", "lockupDays": 365 },
+      { "name": "reg-s", "lockupDays": 40 }
+    ]
+  },
+  "roles": {
+    "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "agents": ["0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+    "multisig": true
+  },
+  "controls": {
+    "pausable": true,
+    "forcedTransfer": true,
+    "recovery": true
+  }
+}

@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "token-transfer-check",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/INNERLUXES/token-transfer-check",
+          "rules": [
+            {
+              "id": "file-unreadable",
+              "name": "file-unreadable",
+              "shortDescription": {
+                "text": "a file is not JSON or CSV the readers can follow, or its top level is not an object, so nothing in it was read"
+              },
+              "help": {
+                "text": "Write the configuration as one JSON object, and the register and the transfers as JSON or as a CSV table with a header row (docs/inputs.md); fix the line named. (input)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "field-missing",
+              "name": "field-missing",
+              "shortDescription": {
+                "text": "a field the checks need is not in a file: a part of the configuration or one of its fields, the holders or one of their addresses, countries or balances, or the id, addresses, amount or day of a transfer"
+              },
+              "help": {
+                "text": "Add the field named; docs/inputs.md lists what each file needs. (input)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "field-unknown",
+              "name": "field-unknown",
+              "shortDescription": {
+                "text": "a key or column the tool does not read, often a misspelt one; its value was left out of every check"
+              },
+              "help": {
+                "text": "Correct the spelling to a field of docs/inputs.md, or remove it. (input)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "field-invalid",
+              "name": "field-invalid",
+              "shortDescription": {
+                "text": "a value of the wrong type or form: text where a number belongs, a cap that is not an amount or a percent, an investor class the configuration does not list, frozen tokens that are not a decimal, or a country or class named twice"
+              },
+              "help": {
+                "text": "Write the value as docs/inputs.md shows: text for names, codes and addresses, whole numbers for decimals, days and limits, plain decimal numbers for amounts, true or false for the controls. (input)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "field-duplicate",
+              "name": "field-duplicate",
+              "shortDescription": {
+                "text": "a column is named twice in the header of a CSV file, so two readers of the file could take different values; the second column was left out"
+              },
+              "help": {
+                "text": "Keep one column of each name. In a JSON file a key written twice stops the reader (file-unreadable). (input)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "secret-in-file",
+              "name": "secret-in-file",
+              "shortDescription": {
+                "text": "a file holds a private key, a seed or a mnemonic, under a key or column named for one or as a value shaped like one; the tool never reads it and never shows it"
+              },
+              "help": {
+                "text": "Remove the value from the file and from wherever the file was copied, treat it as exposed and move what it controls to a new key. The files of this tool name wallets by their public address only. (input)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "input"
+              }
+            },
+            {
+              "id": "agent-missing",
+              "name": "agent-missing",
+              "shortDescription": {
+                "text": "the configuration names no agent, so no one can add investors to the identity registry, freeze a wallet, pause the token, force a transfer or recover lost tokens"
+              },
+              "help": {
+                "text": "Name the agent wallets in roles.agents, appointed by the owner. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "agent-single-key",
+              "name": "agent-single-key",
+              "shortDescription": {
+                "text": "forced transfers or recovery are on, and one agent that is not a multisig wallet holds them, so one key can move any investor's tokens"
+              },
+              "help": {
+                "text": "Make the agent a multisig wallet that needs more than one signer (and set roles.multisig to true), or name more than one agent under a policy of the team. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "pause-missing",
+              "name": "pause-missing",
+              "shortDescription": {
+                "text": "the token is not pausable, though ERC-3643 asks that it can be paused"
+              },
+              "help": {
+                "text": "Deploy the token with the pause and unpause functions of ERC-3643 and set controls.pausable to true. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "forced-transfer-missing",
+              "name": "forced-transfer-missing",
+              "shortDescription": {
+                "text": "forced transfers are off, though ERC-3643 asks that an agent wallet can force one"
+              },
+              "help": {
+                "text": "Turn forced transfers on for the agent, and keep that power behind more than one key. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "recovery-missing",
+              "name": "recovery-missing",
+              "shortDescription": {
+                "text": "recovery is off, though ERC-3643 asks for a way to recover the tokens of an investor who has lost the key to a wallet"
+              },
+              "help": {
+                "text": "Turn recovery on for the agent, and keep that power behind more than one key. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "standard-unknown",
+              "name": "standard-unknown",
+              "shortDescription": {
+                "text": "the standard of the token is not ERC-3643, so the rules of the checks may not be the ones the token enforces"
+              },
+              "help": {
+                "text": "Write ERC-3643 when the token follows it; for another standard, check each rule of this report against what the token itself enforces. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "country-unknown",
+              "name": "country-unknown",
+              "shortDescription": {
+                "text": "a country, in the allowed countries, the limits by country or the register, that is not a two-letter code of ISO 3166-1 as the UN M49 table lists them (or XK), written in capitals, such as UK for GB"
+              },
+              "help": {
+                "text": "Write the two capital letters of the country, such as GB for the United Kingdom. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "address-malformed",
+              "name": "address-malformed",
+              "shortDescription": {
+                "text": "an address of the owner, an agent, a holder or a transfer that is not 0x and 40 hex digits, or is the zero address"
+              },
+              "help": {
+                "text": "Copy the address again from the wallet, as 0x and 40 hex digits. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "amount-decimals",
+              "name": "amount-decimals",
+              "shortDescription": {
+                "text": "a supply, cap, balance, frozen amount or transfer amount with more decimal places than the decimals of the token, which the chain cannot hold"
+              },
+              "help": {
+                "text": "Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "amount-invalid",
+              "name": "amount-invalid",
+              "shortDescription": {
+                "text": "a total supply or a transfer amount that is 0, a balance or amount that is negative, or one that is not a plain decimal number (a sign, an exponent or a thousands separator)"
+              },
+              "help": {
+                "text": "Write the amount as a plain decimal number such as 2500, above 0 for a supply and a transfer. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "holder-duplicate",
+              "name": "holder-duplicate",
+              "shortDescription": {
+                "text": "two rows of the register name the same address (compared without case), so its balance, country or class is counted twice or read from the wrong row"
+              },
+              "help": {
+                "text": "Keep one row for each wallet, with its whole balance. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "investor-claims-missing",
+              "name": "investor-claims-missing",
+              "shortDescription": {
+                "text": "a transfer to an address that is not in the register, or to an investor whose identity lacks a required claim, or a holder of tokens who lacks one"
+              },
+              "help": {
+                "text": "Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "investor-country-not-allowed",
+              "name": "investor-country-not-allowed",
+              "shortDescription": {
+                "text": "a transfer to an investor, or a holder of tokens, whose country is not in the allowed countries of the configuration"
+              },
+              "help": {
+                "text": "Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "holder-limit",
+              "name": "holder-limit",
+              "shortDescription": {
+                "text": "the number of holders of the register, or after a transfer to a new holder, is above maxHolders"
+              },
+              "help": {
+                "text": "Leave the transfer out, or wait for a holder to leave; raise maxHolders only after the legal review of the offering says so. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "country-holder-limit",
+              "name": "country-holder-limit",
+              "shortDescription": {
+                "text": "the number of holders in a country, in the register or after a transfer to a new holder, is above the limit maxHoldersPerCountry sets for it"
+              },
+              "help": {
+                "text": "Leave the transfer out, or wait for a holder of that country to leave; raise the limit only after the legal review of the offering says so. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "holding-above-cap",
+              "name": "holding-above-cap",
+              "shortDescription": {
+                "text": "a holder of the register, or the receiver after a transfer, holds more than maxHolding, an amount or a percent of the total supply"
+              },
+              "help": {
+                "text": "Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "supply-mismatch",
+              "name": "supply-mismatch",
+              "shortDescription": {
+                "text": "the balances of the register do not add up to the total supply of the configuration"
+              },
+              "help": {
+                "text": "Export the register and the supply again from the same block, and find the holder that is missing or counted twice. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "transfer-id-duplicate",
+              "name": "transfer-id-duplicate",
+              "shortDescription": {
+                "text": "two transfers share an id (compared without case and outer spaces), so the second is refused or made twice"
+              },
+              "help": {
+                "text": "Give every transfer an id of its own and keep it when the list is sent again. (best practice)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "best practice"
+              }
+            },
+            {
+              "id": "address-frozen",
+              "name": "address-frozen",
+              "shortDescription": {
+                "text": "a transfer from or to a frozen wallet, or one that needs tokens frozen on the wallet of the sender"
+              },
+              "help": {
+                "text": "Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "balance-insufficient",
+              "name": "balance-insufficient",
+              "shortDescription": {
+                "text": "a transfer of more than the sender holds after the transfers before it, or from an address that is not in the register"
+              },
+              "help": {
+                "text": "Lower the amount, or put the transfer after the one that gives the sender the tokens. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            },
+            {
+              "id": "transfer-in-lockup",
+              "name": "transfer-in-lockup",
+              "shortDescription": {
+                "text": "a transfer made, by its own day, fewer days after the sender acquired the tokens than the lockupDays of its investor class"
+              },
+              "help": {
+                "text": "Move the transfer to the day the lock-up ends or later, as the message says. (documented)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "documented"
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "examples/good/config.json"
+          }
+        },
+        {
+          "location": {
+            "uri": "examples/good/register.csv"
+          }
+        },
+        {
+          "location": {
+            "uri": "examples/good/transfers.csv"
+          }
+        }
+      ],
+      "results": [],
+      "properties": {
+        "notice": "This report is an input to a review before the transfers reach the chain: not legal advice, not a compliance review and not a guarantee that a transfer will settle.",
+        "result": "PASS - no finding at or above error",
+        "sources": [
+          "https://eips.ethereum.org/EIPS/eip-3643",
+          "https://eips.ethereum.org/EIPS/eip-20",
+          "https://www.ecfr.gov/current/title-17/section-230.144",
+          "https://unstats.un.org/unsd/methodology/m49/overview/",
+          "https://www.swift.com/swift-resource/11971/download",
+          "https://ethereum.org/en/developers/docs/accounts/"
+        ]
+      }
+    }
+  ]
+}

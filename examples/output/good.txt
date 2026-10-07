@@ -1,0 +1,54 @@
+token-transfer-check: examples/good/config.json
+files: config examples/good/config.json (JSON, 31 lines, 1,146 bytes); register examples/good/register.csv (CSV, 9 lines, 1,001 bytes); transfers examples/good/transfers.csv (CSV, 5 lines, 587 bytes)
+token: Meadow Example Lofts Token (MLT); ERC-3643; 2 decimals; total supply 50000
+register: 8 holders, 6 with a balance above 0; balances add up to 50000
+transfers: 4 transfers, 4 taken as made; 8 holders after them
+findings: 0
+
+Checks (27)
+
+  check                         level    kind           findings
+  file-unreadable               error    input          0
+  field-missing                 error    input          0
+  field-unknown                 warning  input          0
+  field-invalid                 error    input          0
+  field-duplicate               error    input          0
+  secret-in-file                error    input          0
+  agent-missing                 error    documented     0
+  agent-single-key              warning  best practice  0
+  pause-missing                 error    documented     0
+  forced-transfer-missing       warning  documented     0
+  recovery-missing              warning  documented     0
+  standard-unknown              warning  best practice  0
+  country-unknown               error    documented     0
+  address-malformed             error    documented     0
+  amount-decimals               error    documented     0
+  amount-invalid                error    best practice  0
+  holder-duplicate              error    best practice  0
+  investor-claims-missing       error    documented     0
+  investor-country-not-allowed  error    documented     0
+  holder-limit                  error    documented     0
+  country-holder-limit          error    documented     0
+  holding-above-cap             error    documented     0
+  supply-mismatch               error    best practice  0
+  transfer-id-duplicate         error    best practice  0
+  address-frozen                error    documented     0
+  balance-insufficient          error    documented     0
+  transfer-in-lockup            error    documented     0
+
+Findings (0)
+
+  none
+
+Holders by country (5)
+
+  country  allowed  limit  holders  after transfers
+  CH       yes      -      1        1
+  DE       yes      -      1        1
+  GB       yes      10     1        2
+  SG       yes      -      1        1
+  US       yes      35     2        3
+
+This report is an input to a review before the transfers reach the chain: not legal advice, not a compliance review and not a guarantee that a transfer will settle.
+
+RESULT: PASS - no finding at or above error

@@ -1,0 +1,943 @@
+{
+  "tool": "token-transfer-check",
+  "version": "1.0.0",
+  "inputs": {
+    "config": {
+      "file": "examples/bad/config.json",
+      "format": "json",
+      "bytes": 1119,
+      "lines": 32
+    },
+    "register": {
+      "file": "examples/bad/register.csv",
+      "format": "csv",
+      "bytes": 1337,
+      "lines": 14
+    },
+    "transfers": {
+      "file": "examples/bad/transfers.json",
+      "format": "json",
+      "bytes": 2512,
+      "lines": 20
+    }
+  },
+  "token": {
+    "name": "Harbor Example Tower Token",
+    "symbol": "HXT",
+    "standard": "ERC-1400",
+    "decimals": 0,
+    "totalSupply": "100000"
+  },
+  "summary": {
+    "holders": 13,
+    "holding": 10,
+    "sumOfBalances": "97012.5",
+    "transfers": 15,
+    "made": 2,
+    "holdingAfter": 10
+  },
+  "totals": {
+    "findings": 33,
+    "byLevel": {
+      "error": 29,
+      "warning": 4,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "field-missing",
+      "level": "error",
+      "kind": "input",
+      "findings": 2
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "input",
+      "findings": 1
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "input",
+      "findings": 1
+    },
+    {
+      "id": "field-duplicate",
+      "level": "error",
+      "kind": "input",
+      "findings": 1
+    },
+    {
+      "id": "secret-in-file",
+      "level": "error",
+      "kind": "input",
+      "findings": 1
+    },
+    {
+      "id": "agent-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "agent-single-key",
+      "level": "warning",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "pause-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 1
+    },
+    {
+      "id": "forced-transfer-missing",
+      "level": "warning",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "recovery-missing",
+      "level": "warning",
+      "kind": "documented",
+      "findings": 1
+    },
+    {
+      "id": "standard-unknown",
+      "level": "warning",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "country-unknown",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "address-malformed",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "amount-decimals",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "amount-invalid",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "holder-duplicate",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "investor-claims-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 3
+    },
+    {
+      "id": "investor-country-not-allowed",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "holder-limit",
+      "level": "error",
+      "kind": "documented",
+      "findings": 1
+    },
+    {
+      "id": "country-holder-limit",
+      "level": "error",
+      "kind": "documented",
+      "findings": 1
+    },
+    {
+      "id": "holding-above-cap",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "supply-mismatch",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "transfer-id-duplicate",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 1
+    },
+    {
+      "id": "address-frozen",
+      "level": "error",
+      "kind": "documented",
+      "findings": 2
+    },
+    {
+      "id": "balance-insufficient",
+      "level": "error",
+      "kind": "documented",
+      "findings": 1
+    },
+    {
+      "id": "transfer-in-lockup",
+      "level": "error",
+      "kind": "documented",
+      "findings": 1
+    }
+  ],
+  "config": {
+    "minSeverity": "info",
+    "failOn": "error"
+  },
+  "findings": [
+    {
+      "id": "supply-mismatch",
+      "severity": "error",
+      "message": "The balances of the register add up to 97012.5, but the totalSupply of the token is 100000, 2987.5 more. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 8,
+      "column": 5,
+      "at": "examples/bad/config.json:8",
+      "subject": null,
+      "fix": "Export the register and the supply again from the same block, and find the holder that is missing or counted twice.",
+      "kind": "best practice",
+      "basis": [
+        {
+          "text": "ERC-20 gives a token a function for its total supply and one for the balance of each account.",
+          "source": "ERC-20: Token Standard",
+          "url": "https://eips.ethereum.org/EIPS/eip-20"
+        }
+      ],
+      "own": "comparing the sum of the balances with the total supply is a best practice of this tool, not a rule in the pages it cites; ERC-20 gives both, and a register that does not add up is an export that left out a holder or counted one twice"
+    },
+    {
+      "id": "country-unknown",
+      "severity": "error",
+      "message": "The allowedCountries name \"UK\", which is not a two-letter code of the country table the tool reads (the ISO alpha-2 codes of the UN M49 table, and XK). The code of the United Kingdom is GB.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 11,
+      "column": 50,
+      "at": "examples/bad/config.json:11",
+      "subject": null,
+      "fix": "Write the two capital letters of the country, such as GB for the United Kingdom.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "The M49 table of the UN Statistics Division gives each country or area it lists a number of three digits and its ISO codes of two and of three letters.",
+          "source": "United Nations Statistics Division: Standard country or area codes for statistical use (M49)",
+          "url": "https://unstats.un.org/unsd/methodology/m49/overview/"
+        },
+        {
+          "text": "The IBAN registry of Swift writes the prefix of each country as an ISO 3166 code, and lists XK for Kosovo, which the UN table leaves out.",
+          "source": "Swift: IBAN Registry (TXT)",
+          "url": "https://www.swift.com/swift-resource/11971/download"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "secret-in-file",
+      "severity": "error",
+      "message": "The file holds the key \"seedPhrase\", which names a seed, a mnemonic or a private key. The tool never reads one, and the value is not shown.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 25,
+      "column": 5,
+      "at": "examples/bad/config.json:25",
+      "subject": null,
+      "fix": "Remove the value from the file and from wherever the file was copied, treat it as exposed and move what it controls to a new key. The files of this tool name wallets by their public address only.",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    },
+    {
+      "id": "pause-missing",
+      "severity": "error",
+      "message": "The token is not pausable (pausable is false). ERC-3643 asks that a token can be paused, so that its transfers can be stopped while a problem is found and fixed.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 28,
+      "column": 5,
+      "at": "examples/bad/config.json:28",
+      "subject": null,
+      "fix": "Deploy the token with the pause and unpause functions of ERC-3643 and set controls.pausable to true.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The standard asks that the token can be paused, and a transfer of a paused token fails.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "field-duplicate",
+      "severity": "error",
+      "message": "The column \"notes\" is named twice in the header of the register; the tool reads the first and left this one out of every check.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 1,
+      "column": 84,
+      "at": "examples/bad/register.csv:1",
+      "subject": null,
+      "fix": "Keep one column of each name. In a JSON file a key written twice stops the reader (file-unreadable).",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    },
+    {
+      "id": "holding-above-cap",
+      "severity": "error",
+      "message": "Holder 0x4444444444444444444444444444444444444444 holds 25000 tokens, above the maxHolding of 20%, which is 20000 of the total supply.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 5,
+      "column": 71,
+      "at": "examples/bad/register.csv:5",
+      "subject": "0x4444444444444444444444444444444444444444",
+      "fix": "Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The compliance check can also hold each investor to a largest amount of tokens, and the rationale of the standard names a cap on the percent any one investor holds.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "investor-claims-missing",
+      "severity": "error",
+      "message": "Holder 0x5555555555555555555555555555555555555555 holds 8000 tokens, but its identity lacks the required claim ACCREDITATION, so the identity registry does not verify it and it cannot receive more.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 6,
+      "column": 53,
+      "at": "examples/bad/register.csv:6",
+      "subject": "0x5555555555555555555555555555555555555555",
+      "fix": "Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "investor-country-not-allowed",
+      "severity": "error",
+      "message": "Holder 0x6666666666666666666666666666666666666666 holds 6000 tokens and its country is FR, which is not in the allowedCountries of the configuration (US, GB, DE and CH).",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 7,
+      "column": 44,
+      "at": "examples/bad/register.csv:7",
+      "subject": "0x6666666666666666666666666666666666666666",
+      "fix": "Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "holder-duplicate",
+      "severity": "error",
+      "message": "The address 0x1111111111111111111111111111111111111111 is also the address of the holder at line 2; the register holds one row for each wallet, and this one was left out of the counts and the sums. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 11,
+      "column": 1,
+      "at": "examples/bad/register.csv:11",
+      "subject": "0x1111111111111111111111111111111111111111",
+      "fix": "Keep one row for each wallet, with its whole balance.",
+      "kind": "best practice",
+      "basis": [],
+      "own": "asking for one row of the register for each wallet is a best practice of this tool, not a rule in the pages it cites; the identity registry holds one identity for a wallet, and two rows of one wallet are a mistake of the export"
+    },
+    {
+      "id": "country-unknown",
+      "severity": "error",
+      "message": "The country of holder 0xcccccccccccccccccccccccccccccccccccccccc is \"TW\", which is not a two-letter code of the country table the tool reads. The UN table the tool reads lists no code for Taiwan; check the code by hand.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 12,
+      "column": 44,
+      "at": "examples/bad/register.csv:12",
+      "subject": "0xcccccccccccccccccccccccccccccccccccccccc",
+      "fix": "Write the two capital letters of the country, such as GB for the United Kingdom.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "The M49 table of the UN Statistics Division gives each country or area it lists a number of three digits and its ISO codes of two and of three letters.",
+          "source": "United Nations Statistics Division: Standard country or area codes for statistical use (M49)",
+          "url": "https://unstats.un.org/unsd/methodology/m49/overview/"
+        },
+        {
+          "text": "The IBAN registry of Swift writes the prefix of each country as an ISO 3166 code, and lists XK for Kosovo, which the UN table leaves out.",
+          "source": "Swift: IBAN Registry (TXT)",
+          "url": "https://www.swift.com/swift-resource/11971/download"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "address-malformed",
+      "severity": "error",
+      "message": "The address of holder 0x1234 has 4 characters after 0x, not 40; an address is 0x followed by 40 hex digits.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 13,
+      "column": 1,
+      "at": "examples/bad/register.csv:13",
+      "subject": "0x1234",
+      "fix": "Copy the address again from the wallet, as 0x and 40 hex digits.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "An Ethereum address is made from the last 20 bytes of a Keccak-256 hash of the public key with 0x in front, 42 characters with 40 hex digits, and a contract account has an address of the same form.",
+          "source": "ethereum.org: Ethereum accounts",
+          "url": "https://ethereum.org/en/developers/docs/accounts/"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "field-invalid",
+      "severity": "error",
+      "message": "The investorClass of holder 0x1234 is \"founders\", which is not a class of the configuration (reg-d and reg-s).",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 13,
+      "column": 11,
+      "at": "examples/bad/register.csv:13",
+      "subject": "0x1234",
+      "fix": "Write the value as docs/inputs.md shows: text for names, codes and addresses, whole numbers for decimals, days and limits, plain decimal numbers for amounts, true or false for the controls.",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    },
+    {
+      "id": "field-missing",
+      "severity": "error",
+      "message": "Holder 0xdddddddddddddddddddddddddddddddddddddddd has no acquiredDay, but its class reg-s has a lock-up of 40 days, so a transfer from it cannot be checked.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 14,
+      "column": 1,
+      "at": "examples/bad/register.csv:14",
+      "subject": "0xdddddddddddddddddddddddddddddddddddddddd",
+      "fix": "Add the field named; docs/inputs.md lists what each file needs.",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    },
+    {
+      "id": "amount-decimals",
+      "severity": "error",
+      "message": "The balance of holder 0xdddddddddddddddddddddddddddddddddddddddd is 12.5, with 1 decimal place, but the token has 0 decimals, so the chain cannot hold the amount: it is a whole number of the smallest unit.",
+      "file": "examples/bad/register.csv",
+      "input": "register",
+      "line": 14,
+      "column": 71,
+      "at": "examples/bad/register.csv:14",
+      "subject": "0xdddddddddddddddddddddddddddddddddddddddd",
+      "fix": "Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "ERC-20 gives a token a number of decimals by which an amount on the chain, a whole number, is divided for people to read it; 8 decimals means a division by 100000000.",
+          "source": "ERC-20: Token Standard",
+          "url": "https://eips.ethereum.org/EIPS/eip-20"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "transfer-in-lockup",
+      "severity": "error",
+      "message": "Transfer T-01 is made on day 400, but the sender, of the class reg-d, acquired its tokens on day 300 and the class holds them for 365 days: the lock-up ends on day 665, 265 days later.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 4,
+      "column": 145,
+      "at": "examples/bad/transfers.json:4",
+      "subject": "T-01",
+      "fix": "Move the transfer to the day the lock-up ends or later, as the message says.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The functions of an ERC-3643 token let the owner and the agents manage the supply, the rules of transfer and lock-ups, and the compliance contract enforces the rules of the offering on every transfer.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "As one example of a lock-up, Rule 144 (d) sets a holding period for restricted securities between their acquisition from the issuer and a resale under the rule: six months where the issuer has reported for at least 90 days, and one year where it has not.",
+          "source": "eCFR: 17 CFR 230.144 (Rule 144), paragraph (d), Holding period for restricted securities",
+          "url": "https://www.ecfr.gov/current/title-17/section-230.144"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "country-holder-limit",
+      "severity": "error",
+      "message": "Transfer T-02 makes 0x9999999999999999999999999999999999999999 a new holder in US, which brings the holders there to 4, above the limit of 3 for US.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 5,
+      "column": 75,
+      "at": "examples/bad/transfers.json:5",
+      "subject": "T-02",
+      "fix": "Leave the transfer out, or wait for a holder of that country to leave; raise the limit only after the legal review of the offering says so.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The compliance check of each transfer can hold the token to a fixed largest number of holders, overall or for each country, and refuses a transfer that breaks such a rule.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "holder-limit",
+      "severity": "error",
+      "message": "Transfer T-02 makes 0x9999999999999999999999999999999999999999 a new holder, which brings the holders to 11, above the maxHolders of 10.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 5,
+      "column": 75,
+      "at": "examples/bad/transfers.json:5",
+      "subject": "T-02",
+      "fix": "Leave the transfer out, or wait for a holder to leave; raise maxHolders only after the legal review of the offering says so.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The compliance check of each transfer can hold the token to a fixed largest number of holders, overall or for each country, and refuses a transfer that breaks such a rule.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "address-frozen",
+      "severity": "error",
+      "message": "Transfer T-03 is sent from 0x7777777777777777777777777777777777777777, a frozen wallet; ERC-3643 refuses a transfer from a frozen wallet.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 6,
+      "column": 21,
+      "at": "examples/bad/transfers.json:6",
+      "subject": "T-03",
+      "fix": "Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "An agent can freeze a wallet or a part of its tokens; a transfer fails when the wallet that sends or the one that receives is frozen.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "address-frozen",
+      "severity": "error",
+      "message": "Transfer T-04 sends 1500 tokens, but 3000 of the 4000 the sender holds are frozen, which leaves a free balance of 1000.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 7,
+      "column": 127,
+      "at": "examples/bad/transfers.json:7",
+      "subject": "T-04",
+      "fix": "Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "An agent can freeze a wallet or a part of its tokens; a transfer fails when the wallet that sends or the one that receives is frozen.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "balance-insufficient",
+      "severity": "error",
+      "message": "Transfer T-05 is sent from 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, which is not in the register, so it holds no tokens the register knows of.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 8,
+      "column": 21,
+      "at": "examples/bad/transfers.json:8",
+      "subject": "T-05",
+      "fix": "Lower the amount, or put the transfer after the one that gives the sender the tokens.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "Under ERC-20 a transfer is expected to throw when the caller does not hold enough tokens for it.",
+          "source": "ERC-20: Token Standard",
+          "url": "https://eips.ethereum.org/EIPS/eip-20"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "holding-above-cap",
+      "severity": "error",
+      "message": "Transfer T-06 brings 0x3333333333333333333333333333333333333333 to 22000 tokens, above the maxHolding of 20%, which is 20000 of the total supply.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 9,
+      "column": 127,
+      "at": "examples/bad/transfers.json:9",
+      "subject": "T-06",
+      "fix": "Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The compliance check can also hold each investor to a largest amount of tokens, and the rationale of the standard names a cap on the percent any one investor holds.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "investor-claims-missing",
+      "severity": "error",
+      "message": "Transfer T-07 is sent to 0xffffffffffffffffffffffffffffffffffffffff, which is not in the register, so the identity registry does not verify it and the transfer is refused.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 10,
+      "column": 75,
+      "at": "examples/bad/transfers.json:10",
+      "subject": "T-07",
+      "fix": "Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "investor-claims-missing",
+      "severity": "error",
+      "message": "Transfer T-08 is sent to 0x5555555555555555555555555555555555555555, whose identity lacks the required claim ACCREDITATION, so the identity registry does not verify it.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 11,
+      "column": 75,
+      "at": "examples/bad/transfers.json:11",
+      "subject": "T-08",
+      "fix": "Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "investor-country-not-allowed",
+      "severity": "error",
+      "message": "Transfer T-09 is sent to 0x6666666666666666666666666666666666666666, whose country FR is not in the allowedCountries of the configuration (US, GB, DE and CH).",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 12,
+      "column": 75,
+      "at": "examples/bad/transfers.json:12",
+      "subject": "T-09",
+      "fix": "Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "amount-decimals",
+      "severity": "error",
+      "message": "The amount of transfer T-10 is 2.5, with 1 decimal place, but the token has 0 decimals, so the chain cannot hold the amount: it is a whole number of the smallest unit.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 13,
+      "column": 127,
+      "at": "examples/bad/transfers.json:13",
+      "subject": "T-10",
+      "fix": "Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "ERC-20 gives a token a number of decimals by which an amount on the chain, a whole number, is divided for people to read it; 8 decimals means a division by 100000000.",
+          "source": "ERC-20: Token Standard",
+          "url": "https://eips.ethereum.org/EIPS/eip-20"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "amount-invalid",
+      "severity": "error",
+      "message": "The amount of transfer T-11 is 0, a transfer of nothing, which is more often a row that lost its amount. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 14,
+      "column": 127,
+      "at": "examples/bad/transfers.json:14",
+      "subject": "T-11",
+      "fix": "Write the amount as a plain decimal number such as 2500, above 0 for a supply and a transfer.",
+      "kind": "best practice",
+      "basis": [],
+      "own": "refusing a supply or a transfer of 0, a negative amount and an amount in another notation is a best practice of this tool, not a rule in the pages it cites; ERC-20 treats a transfer of 0 as a normal transfer, and a transfer of 0 in a list to review is more often a row that lost its amount"
+    },
+    {
+      "id": "transfer-id-duplicate",
+      "severity": "error",
+      "message": "The id T-03 is also the id of the transfer at line 6; the second is refused, or made twice where the id is not checked. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 15,
+      "column": 7,
+      "at": "examples/bad/transfers.json:15",
+      "subject": "T-03",
+      "fix": "Give every transfer an id of its own and keep it when the list is sent again.",
+      "kind": "best practice",
+      "basis": [],
+      "own": "asking for an id of its own for each transfer is a best practice of this tool, not a rule in the pages it cites; no cited page sets a rule for the ids of a list of transfers"
+    },
+    {
+      "id": "address-malformed",
+      "severity": "error",
+      "message": "The to address of transfer T-13, \"0x12345\", has 5 characters after 0x, not 40; an address is 0x followed by 40 hex digits.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 16,
+      "column": 75,
+      "at": "examples/bad/transfers.json:16",
+      "subject": "T-13",
+      "fix": "Copy the address again from the wallet, as 0x and 40 hex digits.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "An Ethereum address is made from the last 20 bytes of a Keccak-256 hash of the public key with 0x in front, 42 characters with 40 hex digits, and a contract account has an address of the same form.",
+          "source": "ethereum.org: Ethereum accounts",
+          "url": "https://ethereum.org/en/developers/docs/accounts/"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "field-missing",
+      "severity": "error",
+      "message": "Transfer T-15 has no day; the lock-up is worked out from the day of the transfer, and the tool reads no clock.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 18,
+      "column": 5,
+      "at": "examples/bad/transfers.json:18",
+      "subject": "T-15",
+      "fix": "Add the field named; docs/inputs.md lists what each file needs.",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    },
+    {
+      "id": "standard-unknown",
+      "severity": "warning",
+      "message": "The standard of the token is \"ERC-1400\", not ERC-3643, so the rules this report applies, which are those of ERC-3643, may not be the ones the token enforces. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 6,
+      "column": 5,
+      "at": "examples/bad/config.json:6",
+      "subject": null,
+      "fix": "Write ERC-3643 when the token follows it; for another standard, check each rule of this report against what the token itself enforces.",
+      "kind": "best practice",
+      "basis": [],
+      "own": "reading every token by the rules of ERC-3643 is a best practice of this tool, not a rule in the pages it cites; the tool knows one standard, and a token on another may enforce its rules in another way"
+    },
+    {
+      "id": "agent-single-key",
+      "severity": "warning",
+      "message": "One agent holds forced transfers, and the roles do not say it is a multisig wallet (multisig is false), so one key can move the tokens of any investor. This is a best practice of this tool, not a rule in the pages it cites.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 23,
+      "column": 5,
+      "at": "examples/bad/config.json:23",
+      "subject": null,
+      "fix": "Make the agent a multisig wallet that needs more than one signer (and set roles.multisig to true), or name more than one agent under a policy of the team.",
+      "kind": "best practice",
+      "basis": [
+        {
+          "text": "The standard asks that an agent wallet be able to force a transfer, which needs only a verified receiver and passes over the compliance rules.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        },
+        {
+          "text": "The standard asks for a way to recover the tokens of an investor who has lost access to the private key of a wallet, and keeps a record of each recovery on the chain.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": "asking for more than one key behind the power to move an investor's tokens is a best practice of this tool, not a rule in the pages it cites; the standard defines the agent role and leaves how the agent wallet is held to the issuer"
+    },
+    {
+      "id": "recovery-missing",
+      "severity": "warning",
+      "message": "Recovery is off (recovery is false). ERC-3643 asks for a way to recover the tokens of an investor who has lost the key to a wallet; without it those tokens stay where they are.",
+      "file": "examples/bad/config.json",
+      "input": "config",
+      "line": 30,
+      "column": 5,
+      "at": "examples/bad/config.json:30",
+      "subject": null,
+      "fix": "Turn recovery on for the agent, and keep that power behind more than one key.",
+      "kind": "documented",
+      "basis": [
+        {
+          "text": "The standard asks for a way to recover the tokens of an investor who has lost access to the private key of a wallet, and keeps a record of each recovery on the chain.",
+          "source": "ERC-3643: T-REX - Token for Regulated EXchanges",
+          "url": "https://eips.ethereum.org/EIPS/eip-3643"
+        }
+      ],
+      "own": null
+    },
+    {
+      "id": "field-unknown",
+      "severity": "warning",
+      "message": "The key \"note\" of transfer T-14 is not one the tool reads, so its value was left out of every check. Did you mean \"notes\"? The keys of transfer T-14 are id, from, to, amount, day, notes.",
+      "file": "examples/bad/transfers.json",
+      "input": "transfers",
+      "line": 17,
+      "column": 156,
+      "at": "examples/bad/transfers.json:17",
+      "subject": null,
+      "fix": "Correct the spelling to a field of docs/inputs.md, or remove it.",
+      "kind": "input",
+      "basis": [],
+      "own": null
+    }
+  ],
+  "countries": [
+    {
+      "country": "CH",
+      "allowed": true,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "DE",
+      "allowed": true,
+      "limit": null,
+      "register": 3,
+      "after": 3
+    },
+    {
+      "country": "FR",
+      "allowed": false,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "GB",
+      "allowed": true,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "US",
+      "allowed": true,
+      "limit": 3,
+      "register": 3,
+      "after": 3
+    }
+  ],
+  "notes": [
+    "10 transfers with a finding were taken as not made, as the chain would refuse them, so the transfers after them were checked against the balances without them",
+    "3 transfers could not be checked against the register, because an address, the amount or the day could not be read"
+  ],
+  "notice": "This report is an input to a review before the transfers reach the chain: not legal advice, not a compliance review and not a guarantee that a transfer will settle.",
+  "result": {
+    "pass": false,
+    "failOn": "error",
+    "text": "FAIL - 29 findings at or above error (29 error, 4 warning)"
+  }
+}

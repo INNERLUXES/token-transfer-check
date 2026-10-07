@@ -1,0 +1,32 @@
+{
+  "notes": "A made-up configuration for the examples of token-transfer-check: a real estate token of a made-up tower. Every name is made up, every address is one character written many times, no key or seed is real, and nothing here is legal advice.",
+  "token": {
+    "name": "Harbor Example Tower Token",
+    "symbol": "HXT",
+    "standard": "ERC-1400",
+    "decimals": 0,
+    "totalSupply": "100000"
+  },
+  "compliance": {
+    "allowedCountries": ["US", "GB", "DE", "CH", "UK"],
+    "requiredClaims": ["KYC", "ACCREDITATION"],
+    "maxHolders": 10,
+    "maxHoldersPerCountry": { "US": 3 },
+    "maxHolding": "20%",
+    "investorClasses": [
+      { "name": "reg-d", "lockupDays": 365 },
+      { "name": "reg-s", "lockupDays": 40 }
+    ]
+  },
+  "roles": {
+    "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "agents": ["0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+    "multisig": false,
+    "seedPhrase": "lantern lantern lantern lantern lantern lantern lantern lantern lantern lantern lantern lantern"
+  },
+  "controls": {
+    "pausable": false,
+    "forcedTransfer": true,
+    "recovery": false
+  }
+}

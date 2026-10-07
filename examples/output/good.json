@@ -1,0 +1,261 @@
+{
+  "tool": "token-transfer-check",
+  "version": "1.0.0",
+  "inputs": {
+    "config": {
+      "file": "examples/good/config.json",
+      "format": "json",
+      "bytes": 1146,
+      "lines": 31
+    },
+    "register": {
+      "file": "examples/good/register.csv",
+      "format": "csv",
+      "bytes": 1001,
+      "lines": 9
+    },
+    "transfers": {
+      "file": "examples/good/transfers.csv",
+      "format": "csv",
+      "bytes": 587,
+      "lines": 5
+    }
+  },
+  "token": {
+    "name": "Meadow Example Lofts Token",
+    "symbol": "MLT",
+    "standard": "ERC-3643",
+    "decimals": 2,
+    "totalSupply": "50000"
+  },
+  "summary": {
+    "holders": 8,
+    "holding": 6,
+    "sumOfBalances": "50000",
+    "transfers": 4,
+    "made": 4,
+    "holdingAfter": 8
+  },
+  "totals": {
+    "findings": 0,
+    "byLevel": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "field-missing",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "field-unknown",
+      "level": "warning",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "field-invalid",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "field-duplicate",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "secret-in-file",
+      "level": "error",
+      "kind": "input",
+      "findings": 0
+    },
+    {
+      "id": "agent-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "agent-single-key",
+      "level": "warning",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "pause-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "forced-transfer-missing",
+      "level": "warning",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "recovery-missing",
+      "level": "warning",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "standard-unknown",
+      "level": "warning",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "country-unknown",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "address-malformed",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "amount-decimals",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "amount-invalid",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "holder-duplicate",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "investor-claims-missing",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "investor-country-not-allowed",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "holder-limit",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "country-holder-limit",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "holding-above-cap",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "supply-mismatch",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "transfer-id-duplicate",
+      "level": "error",
+      "kind": "best practice",
+      "findings": 0
+    },
+    {
+      "id": "address-frozen",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "balance-insufficient",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    },
+    {
+      "id": "transfer-in-lockup",
+      "level": "error",
+      "kind": "documented",
+      "findings": 0
+    }
+  ],
+  "config": {
+    "minSeverity": "info",
+    "failOn": "error"
+  },
+  "findings": [],
+  "countries": [
+    {
+      "country": "CH",
+      "allowed": true,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "DE",
+      "allowed": true,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "GB",
+      "allowed": true,
+      "limit": 10,
+      "register": 1,
+      "after": 2
+    },
+    {
+      "country": "SG",
+      "allowed": true,
+      "limit": null,
+      "register": 1,
+      "after": 1
+    },
+    {
+      "country": "US",
+      "allowed": true,
+      "limit": 35,
+      "register": 2,
+      "after": 3
+    }
+  ],
+  "notes": [],
+  "notice": "This report is an input to a review before the transfers reach the chain: not legal advice, not a compliance review and not a guarantee that a transfer will settle.",
+  "result": {
+    "pass": true,
+    "failOn": "error",
+    "text": "PASS - no finding at or above error"
+  }
+}

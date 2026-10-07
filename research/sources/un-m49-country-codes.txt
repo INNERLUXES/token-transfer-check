@@ -1,0 +1,255 @@
+Source: https://unstats.un.org/unsd/methodology/m49/overview/
+Read as the English table of the page "Standard country or area codes for statistical use (M49)", Overview, that the United Nations Statistics Division serves at this address, and kept as one line for each row with the four columns named in the first line, less the columns and lines that research/sources.md names; the page itself is the authority.
+
+Standard country or area codes for statistical use (M49)
+Overview
+
+Country or Area | M49 Code | ISO-alpha2 Code | ISO-alpha3 Code
+Algeria | 012 | DZ | DZA
+Egypt | 818 | EG | EGY
+Libya | 434 | LY | LBY
+Morocco | 504 | MA | MAR
+Sudan | 729 | SD | SDN
+Tunisia | 788 | TN | TUN
+Western Sahara | 732 | EH | ESH
+British Indian Ocean Territory | 086 | IO | IOT
+Burundi | 108 | BI | BDI
+Comoros | 174 | KM | COM
+Djibouti | 262 | DJ | DJI
+Eritrea | 232 | ER | ERI
+Ethiopia | 231 | ET | ETH
+French Southern Territories | 260 | TF | ATF
+Kenya | 404 | KE | KEN
+Madagascar | 450 | MG | MDG
+Malawi | 454 | MW | MWI
+Mauritius | 480 | MU | MUS
+Mayotte | 175 | YT | MYT
+Mozambique | 508 | MZ | MOZ
+R&#233;union | 638 | RE | REU
+Rwanda | 646 | RW | RWA
+Seychelles | 690 | SC | SYC
+Somalia | 706 | SO | SOM
+South Sudan | 728 | SS | SSD
+Uganda | 800 | UG | UGA
+United Republic of Tanzania | 834 | TZ | TZA
+Zambia | 894 | ZM | ZMB
+Zimbabwe | 716 | ZW | ZWE
+Angola | 024 | AO | AGO
+Cameroon | 120 | CM | CMR
+Central African Republic | 140 | CF | CAF
+Chad | 148 | TD | TCD
+Congo | 178 | CG | COG
+Democratic Republic of the Congo | 180 | CD | COD
+Equatorial Guinea | 226 | GQ | GNQ
+Gabon | 266 | GA | GAB
+Sao Tome and Principe | 678 | ST | STP
+Botswana | 072 | BW | BWA
+Eswatini | 748 | SZ | SWZ
+Lesotho | 426 | LS | LSO
+Namibia | 516 | NA | NAM
+South Africa | 710 | ZA | ZAF
+Benin | 204 | BJ | BEN
+Burkina Faso | 854 | BF | BFA
+Cabo Verde | 132 | CV | CPV
+Cote d'Ivoire | 384 | CI | CIV
+Gambia | 270 | GM | GMB
+Ghana | 288 | GH | GHA
+Guinea | 324 | GN | GIN
+Guinea-Bissau | 624 | GW | GNB
+Liberia | 430 | LR | LBR
+Mali | 466 | ML | MLI
+Mauritania | 478 | MR | MRT
+Niger | 562 | NE | NER
+Nigeria | 566 | NG | NGA
+Saint Helena | 654 | SH | SHN
+Senegal | 686 | SN | SEN
+Sierra Leone | 694 | SL | SLE
+Togo | 768 | TG | TGO
+Anguilla | 660 | AI | AIA
+Antigua and Barbuda | 028 | AG | ATG
+Aruba | 533 | AW | ABW
+Bahamas | 044 | BS | BHS
+Barbados | 052 | BB | BRB
+Bonaire, Sint Eustatius and Saba | 535 | BQ | BES
+British Virgin Islands | 092 | VG | VGB
+Cayman Islands | 136 | KY | CYM
+Cuba | 192 | CU | CUB
+Cura&#231;ao | 531 | CW | CUW
+Dominica | 212 | DM | DMA
+Dominican Republic | 214 | DO | DOM
+Grenada | 308 | GD | GRD
+Guadeloupe | 312 | GP | GLP
+Haiti | 332 | HT | HTI
+Jamaica | 388 | JM | JAM
+Martinique | 474 | MQ | MTQ
+Montserrat | 500 | MS | MSR
+Puerto Rico | 630 | PR | PRI
+Saint Barth&#233;lemy | 652 | BL | BLM
+Saint Kitts and Nevis | 659 | KN | KNA
+Saint Lucia | 662 | LC | LCA
+Saint Martin (French Part) | 663 | MF | MAF
+Saint Vincent and the Grenadines | 670 | VC | VCT
+Sint Maarten (Dutch part) | 534 | SX | SXM
+Trinidad and Tobago | 780 | TT | TTO
+Turks and Caicos Islands | 796 | TC | TCA
+United States Virgin Islands | 850 | VI | VIR
+Belize | 084 | BZ | BLZ
+Costa Rica | 188 | CR | CRI
+El Salvador | 222 | SV | SLV
+Guatemala | 320 | GT | GTM
+Honduras | 340 | HN | HND
+Mexico | 484 | MX | MEX
+Nicaragua | 558 | NI | NIC
+Panama | 591 | PA | PAN
+Argentina | 032 | AR | ARG
+Bolivia (Plurinational State of) | 068 | BO | BOL
+Bouvet Island | 074 | BV | BVT
+Brazil | 076 | BR | BRA
+Chile | 152 | CL | CHL
+Colombia | 170 | CO | COL
+Ecuador | 218 | EC | ECU
+Falkland Islands (Malvinas) | 238 | FK | FLK
+French Guiana | 254 | GF | GUF
+Guyana | 328 | GY | GUY
+Paraguay | 600 | PY | PRY
+Peru | 604 | PE | PER
+South Georgia and the South Sandwich Islands | 239 | GS | SGS
+Suriname | 740 | SR | SUR
+Uruguay | 858 | UY | URY
+Venezuela (Bolivarian Republic of) | 862 | VE | VEN
+Bermuda | 060 | BM | BMU
+Canada | 124 | CA | CAN
+Greenland | 304 | GL | GRL
+Saint Pierre and Miquelon | 666 | PM | SPM
+United States of America | 840 | US | USA
+Antarctica | 010 | AQ | ATA
+Kazakhstan | 398 | KZ | KAZ
+Kyrgyzstan | 417 | KG | KGZ
+Tajikistan | 762 | TJ | TJK
+Turkmenistan | 795 | TM | TKM
+Uzbekistan | 860 | UZ | UZB
+China | 156 | CN | CHN
+China, Hong Kong Special Administrative Region | 344 | HK | HKG
+China, Macao Special Administrative Region | 446 | MO | MAC
+Democratic People's Republic of Korea | 408 | KP | PRK
+Japan | 392 | JP | JPN
+Mongolia | 496 | MN | MNG
+Republic of Korea | 410 | KR | KOR
+Brunei Darussalam | 096 | BN | BRN
+Cambodia | 116 | KH | KHM
+Indonesia | 360 | ID | IDN
+Lao People's Democratic Republic | 418 | LA | LAO
+Malaysia | 458 | MY | MYS
+Myanmar | 104 | MM | MMR
+Philippines | 608 | PH | PHL
+Singapore | 702 | SG | SGP
+Thailand | 764 | TH | THA
+Timor-Leste | 626 | TL | TLS
+Viet Nam | 704 | VN | VNM
+Afghanistan | 004 | AF | AFG
+Bangladesh | 050 | BD | BGD
+Bhutan | 064 | BT | BTN
+India | 356 | IN | IND
+Iran (Islamic Republic of) | 364 | IR | IRN
+Maldives | 462 | MV | MDV
+Nepal | 524 | NP | NPL
+Pakistan | 586 | PK | PAK
+Sri Lanka | 144 | LK | LKA
+Armenia | 051 | AM | ARM
+Azerbaijan | 031 | AZ | AZE
+Bahrain | 048 | BH | BHR
+Cyprus | 196 | CY | CYP
+Georgia | 268 | GE | GEO
+Iraq | 368 | IQ | IRQ
+Israel | 376 | IL | ISR
+Jordan | 400 | JO | JOR
+Kuwait | 414 | KW | KWT
+Lebanon | 422 | LB | LBN
+Oman | 512 | OM | OMN
+Qatar | 634 | QA | QAT
+Saudi Arabia | 682 | SA | SAU
+State of Palestine | 275 | PS | PSE
+Syrian Arab Republic | 760 | SY | SYR
+T&#252;rkiye | 792 | TR | TUR
+United Arab Emirates | 784 | AE | ARE
+Yemen | 887 | YE | YEM
+Belarus | 112 | BY | BLR
+Bulgaria | 100 | BG | BGR
+Czechia | 203 | CZ | CZE
+Hungary | 348 | HU | HUN
+Poland | 616 | PL | POL
+Republic of Moldova | 498 | MD | MDA
+Romania | 642 | RO | ROU
+Russian Federation | 643 | RU | RUS
+Slovakia | 703 | SK | SVK
+Ukraine | 804 | UA | UKR
+&#197;land Islands | 248 | AX | ALA
+Denmark | 208 | DK | DNK
+Estonia | 233 | EE | EST
+Faroe Islands | 234 | FO | FRO
+Finland | 246 | FI | FIN
+Guernsey | 831 | GG | GGY
+Iceland | 352 | IS | ISL
+Ireland | 372 | IE | IRL
+Isle of Man | 833 | IM | IMN
+Jersey | 832 | JE | JEY
+Latvia | 428 | LV | LVA
+Lithuania | 440 | LT | LTU
+Norway | 578 | NO | NOR
+Svalbard and Jan Mayen Islands | 744 | SJ | SJM
+Sweden | 752 | SE | SWE
+United Kingdom of Great Britain and Northern Ireland | 826 | GB | GBR
+Albania | 008 | AL | ALB
+Andorra | 020 | AD | AND
+Bosnia and Herzegovina | 070 | BA | BIH
+Croatia | 191 | HR | HRV
+Gibraltar | 292 | GI | GIB
+Greece | 300 | GR | GRC
+Holy See | 336 | VA | VAT
+Italy | 380 | IT | ITA
+Malta | 470 | MT | MLT
+Montenegro | 499 | ME | MNE
+North Macedonia | 807 | MK | MKD
+Portugal | 620 | PT | PRT
+San Marino | 674 | SM | SMR
+Serbia | 688 | RS | SRB
+Slovenia | 705 | SI | SVN
+Spain | 724 | ES | ESP
+Austria | 040 | AT | AUT
+Belgium | 056 | BE | BEL
+France | 250 | FR | FRA
+Germany | 276 | DE | DEU
+Liechtenstein | 438 | LI | LIE
+Luxembourg | 442 | LU | LUX
+Monaco | 492 | MC | MCO
+Netherlands (Kingdom of the) | 528 | NL | NLD
+Switzerland | 756 | CH | CHE
+Australia | 036 | AU | AUS
+Christmas Island | 162 | CX | CXR
+Cocos (Keeling) Islands | 166 | CC | CCK
+Heard Island and McDonald Islands | 334 | HM | HMD
+New Zealand | 554 | NZ | NZL
+Norfolk Island | 574 | NF | NFK
+Fiji | 242 | FJ | FJI
+New Caledonia | 540 | NC | NCL
+Papua New Guinea | 598 | PG | PNG
+Solomon Islands | 090 | SB | SLB
+Vanuatu | 548 | VU | VUT
+Guam | 316 | GU | GUM
+Kiribati | 296 | KI | KIR
+Marshall Islands | 584 | MH | MHL
+Micronesia (Federated States of) | 583 | FM | FSM
+Naoero | 520 | NR | NRU
+Northern Mariana Islands | 580 | MP | MNP
+Palau | 585 | PW | PLW
+United States Minor Outlying Islands | 581 | UM | UMI
+American Samoa | 016 | AS | ASM
+Cook Islands | 184 | CK | COK
+French Polynesia | 258 | PF | PYF
+Niue | 570 | NU | NIU
+Pitcairn | 612 | PN | PCN
+Samoa | 882 | WS | WSM
+Tokelau | 772 | TK | TKL
+Tonga | 776 | TO | TON
+Tuvalu | 798 | TV | TUV
+Wallis and Futuna Islands | 876 | WF | WLF

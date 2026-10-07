@@ -1,0 +1,225 @@
+token-transfer-check: examples/bad/config.json
+files: config examples/bad/config.json (JSON, 32 lines, 1,119 bytes); register examples/bad/register.csv (CSV, 14 lines, 1,337 bytes); transfers examples/bad/transfers.json (JSON, 20 lines, 2,512 bytes)
+token: Harbor Example Tower Token (HXT); ERC-1400; 0 decimals; total supply 100000
+register: 13 holders, 10 with a balance above 0; balances add up to 97012.5
+transfers: 15 transfers, 2 taken as made; 10 holders after them
+findings: 33 (29 error, 4 warning)
+
+Checks (27)
+
+  check                         level    kind           findings
+  file-unreadable               error    input          0
+  field-missing                 error    input          2
+  field-unknown                 warning  input          1
+  field-invalid                 error    input          1
+  field-duplicate               error    input          1
+  secret-in-file                error    input          1
+  agent-missing                 error    documented     0
+  agent-single-key              warning  best practice  1
+  pause-missing                 error    documented     1
+  forced-transfer-missing       warning  documented     0
+  recovery-missing              warning  documented     1
+  standard-unknown              warning  best practice  1
+  country-unknown               error    documented     2
+  address-malformed             error    documented     2
+  amount-decimals               error    documented     2
+  amount-invalid                error    best practice  1
+  holder-duplicate              error    best practice  1
+  investor-claims-missing       error    documented     3
+  investor-country-not-allowed  error    documented     2
+  holder-limit                  error    documented     1
+  country-holder-limit          error    documented     1
+  holding-above-cap             error    documented     2
+  supply-mismatch               error    best practice  1
+  transfer-id-duplicate         error    best practice  1
+  address-frozen                error    documented     2
+  balance-insufficient          error    documented     1
+  transfer-in-lockup            error    documented     1
+
+Findings (33)
+
+  ERROR    supply-mismatch               examples/bad/config.json:8
+           The balances of the register add up to 97012.5, but the totalSupply of the token is 100000, 2987.5 more. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Export the register and the supply again from the same block, and find the holder that is missing or counted twice.
+           basis: ERC-20 gives a token a function for its total supply and one for the balance of each account. (ERC-20: Token Standard, https://eips.ethereum.org/EIPS/eip-20)
+           the tool's own choice: comparing the sum of the balances with the total supply is a best practice of this tool, not a rule in the pages it cites; ERC-20 gives both, and a register that does not add up is an export that left out a holder or counted one twice
+
+  ERROR    country-unknown               examples/bad/config.json:11
+           The allowedCountries name "UK", which is not a two-letter code of the country table the tool reads (the ISO alpha-2 codes of the UN M49 table, and XK). The code of the United Kingdom is GB.
+           fix: Write the two capital letters of the country, such as GB for the United Kingdom.
+           basis: The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: The M49 table of the UN Statistics Division gives each country or area it lists a number of three digits and its ISO codes of two and of three letters. (United Nations Statistics Division: Standard country or area codes for statistical use (M49), https://unstats.un.org/unsd/methodology/m49/overview/)
+           basis: The IBAN registry of Swift writes the prefix of each country as an ISO 3166 code, and lists XK for Kosovo, which the UN table leaves out. (Swift: IBAN Registry (TXT), https://www.swift.com/swift-resource/11971/download)
+
+  ERROR    secret-in-file                examples/bad/config.json:25
+           The file holds the key "seedPhrase", which names a seed, a mnemonic or a private key. The tool never reads one, and the value is not shown.
+           fix: Remove the value from the file and from wherever the file was copied, treat it as exposed and move what it controls to a new key. The files of this tool name wallets by their public address only.
+
+  ERROR    pause-missing                 examples/bad/config.json:28
+           The token is not pausable (pausable is false). ERC-3643 asks that a token can be paused, so that its transfers can be stopped while a problem is found and fixed.
+           fix: Deploy the token with the pause and unpause functions of ERC-3643 and set controls.pausable to true.
+           basis: The standard asks that the token can be paused, and a transfer of a paused token fails. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    field-duplicate               examples/bad/register.csv:1
+           The column "notes" is named twice in the header of the register; the tool reads the first and left this one out of every check.
+           fix: Keep one column of each name. In a JSON file a key written twice stops the reader (file-unreadable).
+
+  ERROR    holding-above-cap             examples/bad/register.csv:5
+           Holder 0x4444444444444444444444444444444444444444 holds 25000 tokens, above the maxHolding of 20%, which is 20000 of the total supply.
+           fix: Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer.
+           basis: The compliance check can also hold each investor to a largest amount of tokens, and the rationale of the standard names a cap on the percent any one investor holds. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    investor-claims-missing       examples/bad/register.csv:6
+           Holder 0x5555555555555555555555555555555555555555 holds 8000 tokens, but its identity lacks the required claim ACCREDITATION, so the identity registry does not verify it and it cannot receive more.
+           fix: Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.
+           basis: A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    investor-country-not-allowed  examples/bad/register.csv:7
+           Holder 0x6666666666666666666666666666666666666666 holds 6000 tokens and its country is FR, which is not in the allowedCountries of the configuration (US, GB, DE and CH).
+           fix: Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so.
+           basis: The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    holder-duplicate              examples/bad/register.csv:11
+           The address 0x1111111111111111111111111111111111111111 is also the address of the holder at line 2; the register holds one row for each wallet, and this one was left out of the counts and the sums. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Keep one row for each wallet, with its whole balance.
+           the tool's own choice: asking for one row of the register for each wallet is a best practice of this tool, not a rule in the pages it cites; the identity registry holds one identity for a wallet, and two rows of one wallet are a mistake of the export
+
+  ERROR    country-unknown               examples/bad/register.csv:12
+           The country of holder 0xcccccccccccccccccccccccccccccccccccccccc is "TW", which is not a two-letter code of the country table the tool reads. The UN table the tool reads lists no code for Taiwan; check the code by hand.
+           fix: Write the two capital letters of the country, such as GB for the United Kingdom.
+           basis: The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: The M49 table of the UN Statistics Division gives each country or area it lists a number of three digits and its ISO codes of two and of three letters. (United Nations Statistics Division: Standard country or area codes for statistical use (M49), https://unstats.un.org/unsd/methodology/m49/overview/)
+           basis: The IBAN registry of Swift writes the prefix of each country as an ISO 3166 code, and lists XK for Kosovo, which the UN table leaves out. (Swift: IBAN Registry (TXT), https://www.swift.com/swift-resource/11971/download)
+
+  ERROR    address-malformed             examples/bad/register.csv:13
+           The address of holder 0x1234 has 4 characters after 0x, not 40; an address is 0x followed by 40 hex digits.
+           fix: Copy the address again from the wallet, as 0x and 40 hex digits.
+           basis: An Ethereum address is made from the last 20 bytes of a Keccak-256 hash of the public key with 0x in front, 42 characters with 40 hex digits, and a contract account has an address of the same form. (ethereum.org: Ethereum accounts, https://ethereum.org/en/developers/docs/accounts/)
+
+  ERROR    field-invalid                 examples/bad/register.csv:13
+           The investorClass of holder 0x1234 is "founders", which is not a class of the configuration (reg-d and reg-s).
+           fix: Write the value as docs/inputs.md shows: text for names, codes and addresses, whole numbers for decimals, days and limits, plain decimal numbers for amounts, true or false for the controls.
+
+  ERROR    field-missing                 examples/bad/register.csv:14
+           Holder 0xdddddddddddddddddddddddddddddddddddddddd has no acquiredDay, but its class reg-s has a lock-up of 40 days, so a transfer from it cannot be checked.
+           fix: Add the field named; docs/inputs.md lists what each file needs.
+
+  ERROR    amount-decimals               examples/bad/register.csv:14
+           The balance of holder 0xdddddddddddddddddddddddddddddddddddddddd is 12.5, with 1 decimal place, but the token has 0 decimals, so the chain cannot hold the amount: it is a whole number of the smallest unit.
+           fix: Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token.
+           basis: ERC-20 gives a token a number of decimals by which an amount on the chain, a whole number, is divided for people to read it; 8 decimals means a division by 100000000. (ERC-20: Token Standard, https://eips.ethereum.org/EIPS/eip-20)
+
+  ERROR    transfer-in-lockup            examples/bad/transfers.json:4
+           Transfer T-01 is made on day 400, but the sender, of the class reg-d, acquired its tokens on day 300 and the class holds them for 365 days: the lock-up ends on day 665, 265 days later.
+           fix: Move the transfer to the day the lock-up ends or later, as the message says.
+           basis: The functions of an ERC-3643 token let the owner and the agents manage the supply, the rules of transfer and lock-ups, and the compliance contract enforces the rules of the offering on every transfer. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: As one example of a lock-up, Rule 144 (d) sets a holding period for restricted securities between their acquisition from the issuer and a resale under the rule: six months where the issuer has reported for at least 90 days, and one year where it has not. (eCFR: 17 CFR 230.144 (Rule 144), paragraph (d), Holding period for restricted securities, https://www.ecfr.gov/current/title-17/section-230.144)
+
+  ERROR    country-holder-limit          examples/bad/transfers.json:5
+           Transfer T-02 makes 0x9999999999999999999999999999999999999999 a new holder in US, which brings the holders there to 4, above the limit of 3 for US.
+           fix: Leave the transfer out, or wait for a holder of that country to leave; raise the limit only after the legal review of the offering says so.
+           basis: The compliance check of each transfer can hold the token to a fixed largest number of holders, overall or for each country, and refuses a transfer that breaks such a rule. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    holder-limit                  examples/bad/transfers.json:5
+           Transfer T-02 makes 0x9999999999999999999999999999999999999999 a new holder, which brings the holders to 11, above the maxHolders of 10.
+           fix: Leave the transfer out, or wait for a holder to leave; raise maxHolders only after the legal review of the offering says so.
+           basis: The compliance check of each transfer can hold the token to a fixed largest number of holders, overall or for each country, and refuses a transfer that breaks such a rule. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    address-frozen                examples/bad/transfers.json:6
+           Transfer T-03 is sent from 0x7777777777777777777777777777777777777777, a frozen wallet; ERC-3643 refuses a transfer from a frozen wallet.
+           fix: Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen.
+           basis: An agent can freeze a wallet or a part of its tokens; a transfer fails when the wallet that sends or the one that receives is frozen. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    address-frozen                examples/bad/transfers.json:7
+           Transfer T-04 sends 1500 tokens, but 3000 of the 4000 the sender holds are frozen, which leaves a free balance of 1000.
+           fix: Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen.
+           basis: An agent can freeze a wallet or a part of its tokens; a transfer fails when the wallet that sends or the one that receives is frozen. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    balance-insufficient          examples/bad/transfers.json:8
+           Transfer T-05 is sent from 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, which is not in the register, so it holds no tokens the register knows of.
+           fix: Lower the amount, or put the transfer after the one that gives the sender the tokens.
+           basis: The sender of a transfer has to hold enough free balance, which is its balance less the tokens frozen on its wallet. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: Under ERC-20 a transfer is expected to throw when the caller does not hold enough tokens for it. (ERC-20: Token Standard, https://eips.ethereum.org/EIPS/eip-20)
+
+  ERROR    holding-above-cap             examples/bad/transfers.json:9
+           Transfer T-06 brings 0x3333333333333333333333333333333333333333 to 22000 tokens, above the maxHolding of 20%, which is 20000 of the total supply.
+           fix: Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer.
+           basis: The compliance check can also hold each investor to a largest amount of tokens, and the rationale of the standard names a cap on the percent any one investor holds. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    investor-claims-missing       examples/bad/transfers.json:10
+           Transfer T-07 is sent to 0xffffffffffffffffffffffffffffffffffffffff, which is not in the register, so the identity registry does not verify it and the transfer is refused.
+           fix: Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.
+           basis: A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    investor-claims-missing       examples/bad/transfers.json:11
+           Transfer T-08 is sent to 0x5555555555555555555555555555555555555555, whose identity lacks the required claim ACCREDITATION, so the identity registry does not verify it.
+           fix: Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.
+           basis: A transfer goes through only when the receiver is in the identity registry of the token and is verified: its identity holds the claims of the topics the token requires, signed by a trusted issuer. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    investor-country-not-allowed  examples/bad/transfers.json:12
+           Transfer T-09 is sent to 0x6666666666666666666666666666666666666666, whose country FR is not in the allowedCountries of the configuration (US, GB, DE and CH).
+           fix: Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so.
+           basis: The identity registry ties each wallet to the country of residence of its investor as an ISO 3166 code, and the compliance contract can set the countries in which the token may circulate. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  ERROR    amount-decimals               examples/bad/transfers.json:13
+           The amount of transfer T-10 is 2.5, with 1 decimal place, but the token has 0 decimals, so the chain cannot hold the amount: it is a whole number of the smallest unit.
+           fix: Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token.
+           basis: ERC-20 gives a token a number of decimals by which an amount on the chain, a whole number, is divided for people to read it; 8 decimals means a division by 100000000. (ERC-20: Token Standard, https://eips.ethereum.org/EIPS/eip-20)
+
+  ERROR    amount-invalid                examples/bad/transfers.json:14
+           The amount of transfer T-11 is 0, a transfer of nothing, which is more often a row that lost its amount. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Write the amount as a plain decimal number such as 2500, above 0 for a supply and a transfer.
+           the tool's own choice: refusing a supply or a transfer of 0, a negative amount and an amount in another notation is a best practice of this tool, not a rule in the pages it cites; ERC-20 treats a transfer of 0 as a normal transfer, and a transfer of 0 in a list to review is more often a row that lost its amount
+
+  ERROR    transfer-id-duplicate         examples/bad/transfers.json:15
+           The id T-03 is also the id of the transfer at line 6; the second is refused, or made twice where the id is not checked. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Give every transfer an id of its own and keep it when the list is sent again.
+           the tool's own choice: asking for an id of its own for each transfer is a best practice of this tool, not a rule in the pages it cites; no cited page sets a rule for the ids of a list of transfers
+
+  ERROR    address-malformed             examples/bad/transfers.json:16
+           The to address of transfer T-13, "0x12345", has 5 characters after 0x, not 40; an address is 0x followed by 40 hex digits.
+           fix: Copy the address again from the wallet, as 0x and 40 hex digits.
+           basis: An Ethereum address is made from the last 20 bytes of a Keccak-256 hash of the public key with 0x in front, 42 characters with 40 hex digits, and a contract account has an address of the same form. (ethereum.org: Ethereum accounts, https://ethereum.org/en/developers/docs/accounts/)
+
+  ERROR    field-missing                 examples/bad/transfers.json:18
+           Transfer T-15 has no day; the lock-up is worked out from the day of the transfer, and the tool reads no clock.
+           fix: Add the field named; docs/inputs.md lists what each file needs.
+
+  WARNING  standard-unknown              examples/bad/config.json:6
+           The standard of the token is "ERC-1400", not ERC-3643, so the rules this report applies, which are those of ERC-3643, may not be the ones the token enforces. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Write ERC-3643 when the token follows it; for another standard, check each rule of this report against what the token itself enforces.
+           the tool's own choice: reading every token by the rules of ERC-3643 is a best practice of this tool, not a rule in the pages it cites; the tool knows one standard, and a token on another may enforce its rules in another way
+
+  WARNING  agent-single-key              examples/bad/config.json:23
+           One agent holds forced transfers, and the roles do not say it is a multisig wallet (multisig is false), so one key can move the tokens of any investor. This is a best practice of this tool, not a rule in the pages it cites.
+           fix: Make the agent a multisig wallet that needs more than one signer (and set roles.multisig to true), or name more than one agent under a policy of the team.
+           basis: The standard asks that an agent wallet be able to force a transfer, which needs only a verified receiver and passes over the compliance rules. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           basis: The standard asks for a way to recover the tokens of an investor who has lost access to the private key of a wallet, and keeps a record of each recovery on the chain. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+           the tool's own choice: asking for more than one key behind the power to move an investor's tokens is a best practice of this tool, not a rule in the pages it cites; the standard defines the agent role and leaves how the agent wallet is held to the issuer
+
+  WARNING  recovery-missing              examples/bad/config.json:30
+           Recovery is off (recovery is false). ERC-3643 asks for a way to recover the tokens of an investor who has lost the key to a wallet; without it those tokens stay where they are.
+           fix: Turn recovery on for the agent, and keep that power behind more than one key.
+           basis: The standard asks for a way to recover the tokens of an investor who has lost access to the private key of a wallet, and keeps a record of each recovery on the chain. (ERC-3643: T-REX - Token for Regulated EXchanges, https://eips.ethereum.org/EIPS/eip-3643)
+
+  WARNING  field-unknown                 examples/bad/transfers.json:17
+           The key "note" of transfer T-14 is not one the tool reads, so its value was left out of every check. Did you mean "notes"? The keys of transfer T-14 are id, from, to, amount, day, notes.
+           fix: Correct the spelling to a field of docs/inputs.md, or remove it.
+
+Holders by country (5)
+
+  country  allowed  limit  holders  after transfers
+  CH       yes      -      1        1
+  DE       yes      -      3        3
+  FR       no       -      1        1
+  GB       yes      -      1        1
+  US       yes      3      3        3
+
+note: 10 transfers with a finding were taken as not made, as the chain would refuse them, so the transfers after them were checked against the balances without them
+note: 3 transfers could not be checked against the register, because an address, the amount or the day could not be read
+
+This report is an input to a review before the transfers reach the chain: not legal advice, not a compliance review and not a guarantee that a transfer will settle.
+
+RESULT: FAIL - 29 findings at or above error (29 error, 4 warning)

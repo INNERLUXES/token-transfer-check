@@ -1,0 +1,93 @@
+Source: https://www.swift.com/swift-resource/11971/download
+Read as the IBAN Registry in .txt format that Swift serves at this address (linked as "IBAN Registry (TXT)" from https://www.swift.com/standards/data-standards/iban-international-bank-account-number), a table of tab-separated data elements with one column for each country, and kept as one line for each country with the data elements named in the first line, less the data elements that research/sources.md names; the registry itself is the authority.
+
+Name of country | IBAN prefix country code (ISO 3166) | SEPA country | IBAN structure | IBAN length | IBAN electronic format example | BBAN structure | BBAN length | Country code includes other countries/territories
+Andorra | AD | Yes | AD2!n4!n4!n12!c | 24 | AD1200012030200359100100 | 4!n4!n12!c | 20 | N/A
+United Arab Emirates (The) | AE | No | AE2!n3!n16!n | 23 | AE070331234567890123456 | 3!n16!n | 19 | N/A
+Albania | AL | No | AL2!n8!n16!c | 28 | AL47212110090000000235698741 | 8!n16!c | 24 | N/A
+Austria | AT | Yes | AT2!n5!n11!n | 20 | AT611904300234573201 | 5!n11!n | 16 | N/A
+Azerbaijan | AZ | No | AZ2!n4!a20!c | 28 | AZ21NABZ00000000137010001944 | 4!a20!c | 24 | N/A
+Bosnia and Herzegovina | BA | No | BA2!n3!n3!n8!n2!n | 20 | BA391290079401028494 | 3!n3!n8!n2!n | 16 | N/A
+Belgium | BE | Yes | BE2!n3!n7!n2!n | 16 | BE68539007547034 | 3!n7!n2!n | 12 | N/A
+Bulgaria | BG | Yes | BG2!n4!a4!n2!n8!c | 22 | BG80BNBG96611020345678 | 4!a4!n2!n8!c | 18 | N/A
+Bahrain | BH | No | BH2!n4!a14!c | 22 | BH67BMAG00001299123456 | 4!a14!c | 18 | N/A
+Burundi | BI | No | BI2!n5!n5!n11!n2!n | 27 | BI4210000100010000332045181 | 5!n5!n11!n2!n | 23 | N/A
+Brazil | BR | No | BR2!n8!c5!n10!n1!c1!c | 29 | BR6699999A03000010009795493C1 | 8!c5!n10!n1!c1!c | 25 | N/A
+Belarus | BY | No | BY2!n4!c4!n16!c | 28 | BY13NBRB3600900000002Z00AB00 | 4!c4!n16!c | 24 | N/A
+Switzerland | CH | Yes | CH2!n5!n12!c | 21 | CH9300762011623852957 | 5!n12!c | 17 | N/A
+Costa Rica | CR | No | CR2!n4!n14!n | 22 | CR05015202001026284066 | 4!n14!n | 18 | N/A
+Cyprus | CY | Yes | CY2!n3!n5!n16!c | 28 | CY17002001280000001200527600 | 3!n5!n16!c | 24 | N/A
+Czechia | CZ | Yes | CZ2!n4!n6!n10!n | 24 | CZ6508000000192000145399 | 4!n16!n | 20 | N/A
+Germany | DE | Yes | DE2!n8!n10!n | 22 | DE89370400440532013000 | 8!n10!n | 18 | N/A
+Djibouti | DJ | No | DJ2!n5!n5!n11!n2!n | 27 | DJ2100010000000154000100186 | 5!n5!n11!n2!n | 23 | N/A
+Denmark | DK | Yes | DK2!n4!n9!n1!n | 18 | DK5000400440116243 | 4!n9!n1!n | 14 | N/A
+Dominican Republic | DO | No | DO2!n4!c20!n | 28 | DO28BAGR00000001212453611324 | 4!c20!n | 24 | N/A
+Estonia | EE | Yes | EE2!n2!n14!n | 20 | EE382200221020145685 | 2!n14!n | 16 | N/A
+Egypt | EG | No | EG2!n4!n4!n17!n | 29 | EG380019000500000000263180002 | 4!n4!n17!n | 25 | N/A
+Spain | ES | Yes | ES2!n4!n4!n1!n1!n10!n | 24 | ES9121000418450200051332 | 4!n4!n1!n1!n10!n | 20 | N/A
+Finland | FI | Yes | FI2!n3!n11!n | 18 | FI2112345600000785 | 3!n11!n | 14 | AX
+Falkland Islands (Malvinas) | FK | No | FK2!n2!a12!n | 18 | FK88SC123456789012 | 2!a12!n | 14 | N/A
+Faroe Islands | FO | No | FO2!n4!n9!n1!n | 18 | FO6264600001631634 | 4!n9!n1!n | 14 | N/A
+France | FR | Yes | FR2!n5!n5!n11!c2!n | 27 | FR1420041010050500013M02606 | 5!n5!n11!c2!n | 23 | GF, GP, MQ, RE, PF, TF, YT, NC, BL, MF (French part), PM, WF
+United Kingdom | GB | Yes | GB2!n4!a6!n8!n | 22 | GB29NWBK60161331926819 | 4!a6!n8!n | 18 | IM, JE, GG
+Georgia | GE | No | GE2!n2!a16!n | 22 | GE29NB0000000101904917 | 2!a16!n | 18 | N/A
+Gibraltar | GI | Yes | GI2!n4!a15!c | 23 | GI75NWBK000000007099453 | 4!a15!c | 19 | N/A
+Greenland | GL | No | GL2!n4!n9!n1!n | 18 | GL8964710001000206 | 4!n9!n1!n | 14 | N/A
+Greece | GR | Yes | GR2!n3!n4!n16!c | 27 | GR1601101250000000012300695 | 3!n4!n16!c | 23 | N/A
+Guatemala | GT | No | GT2!n4!c20!c | 28 | GT82TRAJ01020000001210029690 | 4!c20!c | 24 | N/A
+Honduras | HN | No | HN2!n4!a20!n | 28 | HN88CABF00000000000250005469 | 4!a20!n | 24 | N/A
+Croatia | HR | Yes | HR2!n7!n10!n | 21 | HR1210010051863000160 | 7!n10!n | 17 | N/A
+Hungary | HU | Yes | HU2!n3!n4!n1!n15!n1!n | 28 | HU42117730161111101800000000 | 3!n4!n1!n15!n1!n | 24 | N/A
+Ireland | IE | Yes | IE2!n4!a6!n8!n | 22 | IE29AIBK93115212345678 | 4!a6!n8!n | 18 | N/A
+Israel | IL | No | IL2!n3!n3!n13!n | 23 | IL620108000000099999999 | 3!n3!n13!n | 19 | N/A
+Iraq | IQ | No | IQ2!n4!a3!n12!n | 23 | IQ98NBIQ850123456789012 | 4!a3!n12!n | 19 | N/A
+Iceland | IS | Yes | IS2!n4!n2!n6!n10!n | 26 | IS140159260076545510730339 | 4!n2!n6!n10!n | 22 | N/A
+Italy | IT | Yes | IT2!n1!a5!n5!n12!c | 27 | IT60X0542811101000000123456 | 1!a5!n5!n12!c | 23 | N/A
+Jordan | JO | No | JO2!n4!a4!n18!c | 30 | JO94CBJO0010000000000131000302 | 4!a4!n18!c | 26 | N/A
+Kuwait | KW | No | KW2!n4!a22!c | 30 | KW81CBKU0000000000001234560101 | 4!a22!c | 26 | N/A
+Kazakhstan | KZ | No | KZ2!n3!n13!c | 20 | KZ86125KZT5004100100 | 3!n13!c | 16 | N/A
+Lebanon | LB | No | LB2!n4!n20!c | 28 | LB62099900000001001901229114 | 4!n20!c | 24 | N/A
+Saint Lucia | LC | No | LC2!n4!a24!c | 32 | LC55HEMM000100010012001200023015 | 4!a24!c | 28 | N/A
+Liechtenstein | LI | Yes | LI2!n5!n12!c | 21 | LI21088100002324013AA | 5!n12!c | 17 | N/A
+Lithuania | LT | Yes | LT2!n5!n11!n | 20 | LT121000011101001000 | 5!n11!n | 16 | N/A
+Luxembourg | LU | Yes | LU2!n3!n13!c | 20 | LU280019400644750000 | 3!n13!c | 16 | N/A
+Latvia | LV | Yes | LV2!n4!a13!c | 21 | LV80BANK0000435195001 | 4!a13!c | 17 | N/A
+Libya | LY | No | LY2!n3!n3!n15!n | 25 | LY83002048000020100120361 | 3!n3!n15!n | 21 | N/A
+Monaco | MC | Yes | MC2!n5!n5!n11!c2!n | 27 | MC5811222000010123456789030 | 5!n5!n11!c2!n | 23 | N/A
+Moldova, Republic of | MD | No | MD2!n2!c18!c | 24 | MD24AG000225100013104168 | 2!c18!c | 20 | N/A
+Montenegro | ME | No | ME2!n3!n13!n2!n | 22 | ME25505000012345678951 | 3!n13!n2!n | 18 | N/A
+North Macedonia | MK | No | MK2!n3!n10!c2!n | 19 | MK07250120000058984 | 3!n10!c2!n | 15 | N/A
+Mongolia | MN | No | MN2!n4!n12!n | 20 | MN121234123456789123 | 4!n12!n | 16 | N/A
+Mauritania | MR | No | MR2!n5!n5!n11!n2!n | 27 | MR1300020001010000123456753 | 5!n5!n11!n2!n | 23 | N/A
+Malta | MT | Yes | MT2!n4!a5!n18!c | 31 | MT84MALT011000012345MTLCAST001S | 4!a5!n18!c | 27 | N/A
+Mauritius | MU | No | MU2!n4!a2!n2!n12!n3!n3!a | 30 | MU17BOMM0101101030300200000MUR | 4!a2!n2!n12!n3!n3!a | 26 | N/A
+Nicaragua | NI | No | NI2!n4!a20!n | 28 | NI45BAPR00000013000003558124 | 4!a20!n | 24 | N/A
+Netherlands (The) | NL | Yes | NL2!n4!a10!n | 18 | NL91ABNA0417164300 | 4!a10!n | 14 | N/A
+Norway | NO | Yes | NO2!n4!n6!n1!n | 15 | NO9386011117947 | 4!n6!n1!n | 11 | N/A
+Oman | OM | No | OM2!n3!n16!c | 23 | OM810180000001299123456 | 3!n16!c | 19 | N/A
+Pakistan | PK | No | PK2!n4!a16!c | 24 | PK36SCBL0000001123456702 | 4!a16!c | 20 | N/A
+Poland | PL | Yes | PL2!n8!n16!n | 28 | PL61109010140000071219812874 | 8!n16!n | 24 | N/A
+Palestine, State of | PS | No | PS2!n4!a21!c | 29 | PS92PALS000000000400123456702 | 4!a21!c | 25 | N/A
+Portugal | PT | Yes | PT2!n4!n4!n11!n2!n | 25 | PT50000201231234567890154 | 4!n4!n11!n2!n | 21 | N/A
+Qatar | QA | No | QA2!n4!a21!c | 29 | QA58DOHB00001234567890ABCDEFG | 4!a21!c | 25 | N/A
+Romania | RO | Yes | RO2!n4!a16!c | 24 | RO49AAAA1B31007593840000 | 4!a16!c | 20 | N/A
+Serbia | RS | No | RS2!n3!n13!n2!n | 22 | RS35260005601001611379 | 3!n13!n2!n | 18 | N/A
+Russian Federation | RU | No | RU2!n9!n5!n15!c | 33 | RU0304452522540817810538091310419 | 9!n5!n15!c | 29 | N/A
+Saudi Arabia | SA | No | SA2!n2!n18!c | 24 | SA0380000000608010167519 | 2!n18!c | 20 | N/A
+Seychelles | SC | No | SC2!n4!a2!n2!n16!n3!a | 31 | SC18SSCB11010000000000001497USD | 4!a2!n2!n16!n3!a | 27 | N/A
+Sudan | SD | No | SD2!n2!n12!n | 18 | SD2129010501234001 | 2!n12!n | 14 | N/A
+Sweden | SE | Yes | SE2!n3!n16!n1!n | 24 | SE4550000000058398257466 | 3!n16!n1!n | 20 | N/A
+Slovenia | SI | Yes | SI2!n5!n8!n2!n | 19 | SI56263300012039086 | 5!n8!n2!n | 15 | N/A
+Slovakia | SK | Yes | SK2!n4!n6!n10!n | 24 | SK3112000000198742637541 | 4!n6!n10!n | 20 | N/A
+San Marino | SM | Yes | SM2!n1!a5!n5!n12!c | 27 | SM86U0322509800000000270100 | 1!a5!n5!n12!c | 23 | N/A
+Somalia | SO | No | SO2!n4!n3!n12!n | 23 | SO211000001001000100141 | 4!n3!n12!n | 19 | N/A
+Sao Tome and Principe | ST | No | ST2!n4!n4!n11!n2!n | 25 | ST23000100010051845310146 | 4!n4!n11!n2!n | 21 | N/A
+El Salvador | SV | No | SV2!n4!a20!n | 28 | SV62CENR00000000000000700025 | 4!a20!n | 24 | N/A
+Timor-Leste | TL | No | TL2!n3!n14!n2!n | 23 | TL380080012345678910157 | 3!n14!n2!n | 19 | N/A
+Tunisia | TN | No | TN2!n2!n3!n13!n2!n | 24 | TN5910006035183598478831 | 2!n3!n13!n2!n | 20 | N/A
+Turkiye | TR | No | TR2!n5!n1!n16!c | 26 | TR330006100519786457841326 | 5!n1!n16!c | 22 | N/A
+Ukraine | UA | No | UA2!n6!n19!c | 29 | UA213223130000026007233566001 | 6!n19!c | 25 | N/A
+Holy See | VA | Yes | VA2!n3!n15!n | 22 | VA59001123000012345678 | 3!n15!n | 18 | N/A
+Virgin Islands (British) | VG | No | VG2!n4!a16!n | 24 | VG96VPVG0000012345678901 | 4!a16!n | 20 | N/A
+Kosovo | XK | No | XK2!n4!n10!n2!n | 20 | XK051212012345678906 | 4!n10!n2!n | 16 | N/A
+Yemen | YE | No | YE2!n4!a4!n18!c | 30 | YE15CBYE0001018861234567891234 | 4!a4!n18!c | 26 | N/A

@@ -1,0 +1,31 @@
+token-transfer-check checks
+
+  file-unreadable               error    input          a file is not JSON or CSV the readers can follow, or its top level is not an object, so nothing in it was read
+  field-missing                 error    input          a field the checks need is not in a file: a part of the configuration or one of its fields, the holders or one of their addresses, countries or balances, or the id, addresses, amount or day of a transfer
+  field-unknown                 warning  input          a key or column the tool does not read, often a misspelt one; its value was left out of every check
+  field-invalid                 error    input          a value of the wrong type or form: text where a number belongs, a cap that is not an amount or a percent, an investor class the configuration does not list, frozen tokens that are not a decimal, or a country or class named twice
+  field-duplicate               error    input          a column is named twice in the header of a CSV file, so two readers of the file could take different values; the second column was left out
+  secret-in-file                error    input          a file holds a private key, a seed or a mnemonic, under a key or column named for one or as a value shaped like one; the tool never reads it and never shows it
+  agent-missing                 error    documented     the configuration names no agent, so no one can add investors to the identity registry, freeze a wallet, pause the token, force a transfer or recover lost tokens
+  agent-single-key              warning  best practice  forced transfers or recovery are on, and one agent that is not a multisig wallet holds them, so one key can move any investor's tokens
+  pause-missing                 error    documented     the token is not pausable, though ERC-3643 asks that it can be paused
+  forced-transfer-missing       warning  documented     forced transfers are off, though ERC-3643 asks that an agent wallet can force one
+  recovery-missing              warning  documented     recovery is off, though ERC-3643 asks for a way to recover the tokens of an investor who has lost the key to a wallet
+  standard-unknown              warning  best practice  the standard of the token is not ERC-3643, so the rules of the checks may not be the ones the token enforces
+  country-unknown               error    documented     a country, in the allowed countries, the limits by country or the register, that is not a two-letter code of ISO 3166-1 as the UN M49 table lists them (or XK), written in capitals, such as UK for GB
+  address-malformed             error    documented     an address of the owner, an agent, a holder or a transfer that is not 0x and 40 hex digits, or is the zero address
+  amount-decimals               error    documented     a supply, cap, balance, frozen amount or transfer amount with more decimal places than the decimals of the token, which the chain cannot hold
+  amount-invalid                error    best practice  a total supply or a transfer amount that is 0, a balance or amount that is negative, or one that is not a plain decimal number (a sign, an exponent or a thousands separator)
+  holder-duplicate              error    best practice  two rows of the register name the same address (compared without case), so its balance, country or class is counted twice or read from the wrong row
+  investor-claims-missing       error    documented     a transfer to an address that is not in the register, or to an investor whose identity lacks a required claim, or a holder of tokens who lacks one
+  investor-country-not-allowed  error    documented     a transfer to an investor, or a holder of tokens, whose country is not in the allowed countries of the configuration
+  holder-limit                  error    documented     the number of holders of the register, or after a transfer to a new holder, is above maxHolders
+  country-holder-limit          error    documented     the number of holders in a country, in the register or after a transfer to a new holder, is above the limit maxHoldersPerCountry sets for it
+  holding-above-cap             error    documented     a holder of the register, or the receiver after a transfer, holds more than maxHolding, an amount or a percent of the total supply
+  supply-mismatch               error    best practice  the balances of the register do not add up to the total supply of the configuration
+  transfer-id-duplicate         error    best practice  two transfers share an id (compared without case and outer spaces), so the second is refused or made twice
+  address-frozen                error    documented     a transfer from or to a frozen wallet, or one that needs tokens frozen on the wallet of the sender
+  balance-insufficient          error    documented     a transfer of more than the sender holds after the transfers before it, or from an address that is not in the register
+  transfer-in-lockup            error    documented     a transfer made, by its own day, fewer days after the sender acquired the tokens than the lockupDays of its investor class
+
+A documented check rests on ERC-3643, ERC-20, Rule 144 (d) in the eCFR, as an example of a lock-up, the UN M49 table, the IBAN registry of Swift and ethereum.org; a best practice check is this tool's own choice and says so in its message. An input check is about one of the files itself. None of it is legal advice.

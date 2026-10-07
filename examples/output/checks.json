@@ -1,0 +1,285 @@
+[
+  {
+    "id": "file-unreadable",
+    "severity": "error",
+    "kind": "input",
+    "summary": "a file is not JSON or CSV the readers can follow, or its top level is not an object, so nothing in it was read",
+    "fix": "Write the configuration as one JSON object, and the register and the transfers as JSON or as a CSV table with a header row (docs/inputs.md); fix the line named.",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "field-missing",
+    "severity": "error",
+    "kind": "input",
+    "summary": "a field the checks need is not in a file: a part of the configuration or one of its fields, the holders or one of their addresses, countries or balances, or the id, addresses, amount or day of a transfer",
+    "fix": "Add the field named; docs/inputs.md lists what each file needs.",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "field-unknown",
+    "severity": "warning",
+    "kind": "input",
+    "summary": "a key or column the tool does not read, often a misspelt one; its value was left out of every check",
+    "fix": "Correct the spelling to a field of docs/inputs.md, or remove it.",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "field-invalid",
+    "severity": "error",
+    "kind": "input",
+    "summary": "a value of the wrong type or form: text where a number belongs, a cap that is not an amount or a percent, an investor class the configuration does not list, frozen tokens that are not a decimal, or a country or class named twice",
+    "fix": "Write the value as docs/inputs.md shows: text for names, codes and addresses, whole numbers for decimals, days and limits, plain decimal numbers for amounts, true or false for the controls.",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "field-duplicate",
+    "severity": "error",
+    "kind": "input",
+    "summary": "a column is named twice in the header of a CSV file, so two readers of the file could take different values; the second column was left out",
+    "fix": "Keep one column of each name. In a JSON file a key written twice stops the reader (file-unreadable).",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "secret-in-file",
+    "severity": "error",
+    "kind": "input",
+    "summary": "a file holds a private key, a seed or a mnemonic, under a key or column named for one or as a value shaped like one; the tool never reads it and never shows it",
+    "fix": "Remove the value from the file and from wherever the file was copied, treat it as exposed and move what it controls to a new key. The files of this tool name wallets by their public address only.",
+    "basis": [],
+    "own": null
+  },
+  {
+    "id": "agent-missing",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "the configuration names no agent, so no one can add investors to the identity registry, freeze a wallet, pause the token, force a transfer or recover lost tokens",
+    "fix": "Name the agent wallets in roles.agents, appointed by the owner.",
+    "basis": [
+      "erc3643-agent-role"
+    ],
+    "own": null
+  },
+  {
+    "id": "agent-single-key",
+    "severity": "warning",
+    "kind": "best practice",
+    "summary": "forced transfers or recovery are on, and one agent that is not a multisig wallet holds them, so one key can move any investor's tokens",
+    "fix": "Make the agent a multisig wallet that needs more than one signer (and set roles.multisig to true), or name more than one agent under a policy of the team.",
+    "basis": [
+      "erc3643-forced-transfer",
+      "erc3643-recovery"
+    ],
+    "own": "asking for more than one key behind the power to move an investor's tokens is a best practice of this tool, not a rule in the pages it cites; the standard defines the agent role and leaves how the agent wallet is held to the issuer"
+  },
+  {
+    "id": "pause-missing",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "the token is not pausable, though ERC-3643 asks that it can be paused",
+    "fix": "Deploy the token with the pause and unpause functions of ERC-3643 and set controls.pausable to true.",
+    "basis": [
+      "erc3643-pause"
+    ],
+    "own": null
+  },
+  {
+    "id": "forced-transfer-missing",
+    "severity": "warning",
+    "kind": "documented",
+    "summary": "forced transfers are off, though ERC-3643 asks that an agent wallet can force one",
+    "fix": "Turn forced transfers on for the agent, and keep that power behind more than one key.",
+    "basis": [
+      "erc3643-forced-transfer"
+    ],
+    "own": null
+  },
+  {
+    "id": "recovery-missing",
+    "severity": "warning",
+    "kind": "documented",
+    "summary": "recovery is off, though ERC-3643 asks for a way to recover the tokens of an investor who has lost the key to a wallet",
+    "fix": "Turn recovery on for the agent, and keep that power behind more than one key.",
+    "basis": [
+      "erc3643-recovery"
+    ],
+    "own": null
+  },
+  {
+    "id": "standard-unknown",
+    "severity": "warning",
+    "kind": "best practice",
+    "summary": "the standard of the token is not ERC-3643, so the rules of the checks may not be the ones the token enforces",
+    "fix": "Write ERC-3643 when the token follows it; for another standard, check each rule of this report against what the token itself enforces.",
+    "basis": [],
+    "own": "reading every token by the rules of ERC-3643 is a best practice of this tool, not a rule in the pages it cites; the tool knows one standard, and a token on another may enforce its rules in another way"
+  },
+  {
+    "id": "country-unknown",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a country, in the allowed countries, the limits by country or the register, that is not a two-letter code of ISO 3166-1 as the UN M49 table lists them (or XK), written in capitals, such as UK for GB",
+    "fix": "Write the two capital letters of the country, such as GB for the United Kingdom.",
+    "basis": [
+      "erc3643-country",
+      "m49-alpha2",
+      "registry-kosovo"
+    ],
+    "own": null
+  },
+  {
+    "id": "address-malformed",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "an address of the owner, an agent, a holder or a transfer that is not 0x and 40 hex digits, or is the zero address",
+    "fix": "Copy the address again from the wallet, as 0x and 40 hex digits.",
+    "basis": [
+      "evm-address"
+    ],
+    "own": null
+  },
+  {
+    "id": "amount-decimals",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a supply, cap, balance, frozen amount or transfer amount with more decimal places than the decimals of the token, which the chain cannot hold",
+    "fix": "Round the amount to the decimals of the token, or check the decimals of the configuration against the deployed token.",
+    "basis": [
+      "erc20-decimals"
+    ],
+    "own": null
+  },
+  {
+    "id": "amount-invalid",
+    "severity": "error",
+    "kind": "best practice",
+    "summary": "a total supply or a transfer amount that is 0, a balance or amount that is negative, or one that is not a plain decimal number (a sign, an exponent or a thousands separator)",
+    "fix": "Write the amount as a plain decimal number such as 2500, above 0 for a supply and a transfer.",
+    "basis": [],
+    "own": "refusing a supply or a transfer of 0, a negative amount and an amount in another notation is a best practice of this tool, not a rule in the pages it cites; ERC-20 treats a transfer of 0 as a normal transfer, and a transfer of 0 in a list to review is more often a row that lost its amount"
+  },
+  {
+    "id": "holder-duplicate",
+    "severity": "error",
+    "kind": "best practice",
+    "summary": "two rows of the register name the same address (compared without case), so its balance, country or class is counted twice or read from the wrong row",
+    "fix": "Keep one row for each wallet, with its whole balance.",
+    "basis": [],
+    "own": "asking for one row of the register for each wallet is a best practice of this tool, not a rule in the pages it cites; the identity registry holds one identity for a wallet, and two rows of one wallet are a mistake of the export"
+  },
+  {
+    "id": "investor-claims-missing",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a transfer to an address that is not in the register, or to an investor whose identity lacks a required claim, or a holder of tokens who lacks one",
+    "fix": "Register the investor and have a trusted issuer add the missing claims before the transfer, or leave the transfer out; review a holder who lacks a claim with the issuer.",
+    "basis": [
+      "erc3643-verified"
+    ],
+    "own": null
+  },
+  {
+    "id": "investor-country-not-allowed",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a transfer to an investor, or a holder of tokens, whose country is not in the allowed countries of the configuration",
+    "fix": "Leave the transfer out, and review a holder of the register in a country that is not allowed with the issuer; change the allowed countries only after the legal review of the offering says so.",
+    "basis": [
+      "erc3643-country"
+    ],
+    "own": null
+  },
+  {
+    "id": "holder-limit",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "the number of holders of the register, or after a transfer to a new holder, is above maxHolders",
+    "fix": "Leave the transfer out, or wait for a holder to leave; raise maxHolders only after the legal review of the offering says so.",
+    "basis": [
+      "erc3643-holder-limits"
+    ],
+    "own": null
+  },
+  {
+    "id": "country-holder-limit",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "the number of holders in a country, in the register or after a transfer to a new holder, is above the limit maxHoldersPerCountry sets for it",
+    "fix": "Leave the transfer out, or wait for a holder of that country to leave; raise the limit only after the legal review of the offering says so.",
+    "basis": [
+      "erc3643-holder-limits"
+    ],
+    "own": null
+  },
+  {
+    "id": "holding-above-cap",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a holder of the register, or the receiver after a transfer, holds more than maxHolding, an amount or a percent of the total supply",
+    "fix": "Lower the amount of a transfer that takes the receiver above the cap, and review a holder of the register who is already above it with the issuer.",
+    "basis": [
+      "erc3643-holding-cap"
+    ],
+    "own": null
+  },
+  {
+    "id": "supply-mismatch",
+    "severity": "error",
+    "kind": "best practice",
+    "summary": "the balances of the register do not add up to the total supply of the configuration",
+    "fix": "Export the register and the supply again from the same block, and find the holder that is missing or counted twice.",
+    "basis": [
+      "erc20-supply"
+    ],
+    "own": "comparing the sum of the balances with the total supply is a best practice of this tool, not a rule in the pages it cites; ERC-20 gives both, and a register that does not add up is an export that left out a holder or counted one twice"
+  },
+  {
+    "id": "transfer-id-duplicate",
+    "severity": "error",
+    "kind": "best practice",
+    "summary": "two transfers share an id (compared without case and outer spaces), so the second is refused or made twice",
+    "fix": "Give every transfer an id of its own and keep it when the list is sent again.",
+    "basis": [],
+    "own": "asking for an id of its own for each transfer is a best practice of this tool, not a rule in the pages it cites; no cited page sets a rule for the ids of a list of transfers"
+  },
+  {
+    "id": "address-frozen",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a transfer from or to a frozen wallet, or one that needs tokens frozen on the wallet of the sender",
+    "fix": "Leave the transfer out until an agent has unfrozen the wallet or the tokens, and find out why they were frozen.",
+    "basis": [
+      "erc3643-frozen",
+      "erc3643-free-balance"
+    ],
+    "own": null
+  },
+  {
+    "id": "balance-insufficient",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a transfer of more than the sender holds after the transfers before it, or from an address that is not in the register",
+    "fix": "Lower the amount, or put the transfer after the one that gives the sender the tokens.",
+    "basis": [
+      "erc3643-free-balance",
+      "erc20-balance"
+    ],
+    "own": null
+  },
+  {
+    "id": "transfer-in-lockup",
+    "severity": "error",
+    "kind": "documented",
+    "summary": "a transfer made, by its own day, fewer days after the sender acquired the tokens than the lockupDays of its investor class",
+    "fix": "Move the transfer to the day the lock-up ends or later, as the message says.",
+    "basis": [
+      "erc3643-lockups",
+      "rule144-holding-period"
+    ],
+    "own": null
+  }
+]
