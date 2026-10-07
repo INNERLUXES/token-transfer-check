@@ -1,0 +1,49 @@
+{
+  "name": "token-transfer-check",
+  "version": "1.0.0",
+  "description": "Token transfer check: reads the compliance configuration of a tokenized asset as JSON (the token with its decimals and total supply, the standard such as ERC-3643, the allowed investor countries, the required investor claims, the largest number of holders overall and by country, the largest holding of one investor, the lock-up of each investor class in days, the owner and the agents, and whether the token is pausable and has forced transfers and recovery) and, optionally, its holder register and a list of proposed transfers as JSON or CSV, contacts no chain, fetches nothing, runs nothing and reads no clock, and lists with file and line what would break the asset's own rules before it reaches the chain: transfers to investors without the required claims or from countries not allowed, holder counts over the limit overall or by country, holdings above the cap, transfers of tokens still in their lock-up by the transfer's own day, amounts with more decimals than the token, holdings that do not add up to the total supply, transfers from or to frozen wallets, a configuration with no agent or one key behind forced transfers, a token that cannot be paused, unknown countries, duplicate holders and transfer ids and malformed addresses. Not legal advice. Text, markdown, JSON and SARIF output, exit codes for a pipeline, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "token-transfer-check": "bin/token-transfer-check.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "research",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "asset-tokenization",
+    "erc-3643",
+    "security-tokens",
+    "compliance",
+    "real-world-assets",
+    "transfer-restrictions",
+    "static-analysis",
+    "sarif",
+    "cli"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/token-transfer-check.git"
+  },
+  "homepage": "https://innerluxes.dev/blockchain/asset-tokenization"
+}
